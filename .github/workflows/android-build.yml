@@ -24,7 +24,6 @@ jobs:
         with:
           accept-android-sdk-licenses: true
           log-accepted-android-sdk-licenses: false
-      
 
       - name: Install Android SDK
         run: sdkmanager "platforms;android-36" "build-tools;36.0.0" "platform-tools"
@@ -36,6 +35,9 @@ jobs:
 
       - name: Unpack Android project
         run: unzip -q OrbitSocial-Android-Project-Download.zip -d .
+
+      - name: Change minimum Android SDK from 23 to 24
+        run: sed -i 's/minSdk = 23/minSdk = 24/' orbit-social-android-project/app/build.gradle.kts
 
       - name: Check project files
         run: python orbit-social-android-project/scripts/preflight.py
@@ -50,3 +52,5 @@ jobs:
           path: orbit-social-android-project/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14
+
+    
